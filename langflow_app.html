@@ -1,48 +1,15 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Langflow Interactor</title>
-<style>
-  body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f4f4f4;display:flex;flex-direction:column;height:100vh}
-  #app{max-width:600px;margin:auto;padding:20px;background:#fff;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.1);flex:1;display:flex;flex-direction:column}
-  textarea{flex:1;font-size:1rem;padding:10px;border:1px solid #ccc;border-radius:4px;margin-bottom:10px}
-  button{padding:10px 20px;font-size:1rem;background:#007bff;color:#fff;border:none;border-radius:4px;cursor:pointer}
-  button:hover{background:#0056b3}
-  #output{flex:1;overflow:auto;background:#fafafa;border:1px solid #eee;padding:10px;border-radius:4px;margin-top:10px;font-family:monospace}
-</style>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Interact with Langflow</title>
 </head>
 <body>
-<div id="app">
-  <textarea id="input" placeholder="Escribe tu mensaje..."></textarea>
-  <button id="send">Enviar</button>
-  <pre id="output"></pre>
-</div>
-<script>
-const apiUrl = 'https://balanzrecords-genesis-arz.hf.space/api/v1/run/d7a08443-ca6a-421f-8632-c8bd11ff6227?stream=false';
-const apiKey = 'sk-jid5j0osCmdKgqKhZDxqtpKbzeVwFk8T0tvRZDU8mI4';
-
-document.getElementById('send').addEventListener('click', async () => {
-  const input = document.getElementById('input').value.trim();
-  if (!input) return;
-  const output = document.getElementById('output');
-  output.textContent = 'Cargando...';
-  try {
-    const res = await fetch(apiUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`
-      },
-      body: JSON.stringify({input_value: input})
-    });
-    if (!res.ok) throw new Error(`Error ${res.status}`);
-    const data = await res.json();
-    output.textContent = JSON.stringify(data, null, 2);
-  } catch (e) {
-    output.textContent = e.message;
-  }
-});
-</script>
+  <div style="max-width: 600px; margin: 2rem auto;">
+    <h2 style="text-align:center">Langflow App</h2>
+    <textarea id="input" rows="4" style="width:100%; padding:1rem; font-size:1rem; border-radius:5px; border:1px solid #ccc; resize:none;" placeholder="Escribe tu mensaje..."></textarea>
+    <button id="submit" style="display:block; margin:1rem auto; padding:0.75rem 2rem; font-size:1rem; border:none; border-radius:5px; background:#007BFF; color:white; cursor:pointer;">Enviar</button>
+    <pre id="output" style="background:#f5f5f5; padding:1rem; border-radius:5px; white-space:pre-wrap; word-wrap:break-word; margin-top:1rem;"></pre>
+  </div>
 </body>
 </html>
